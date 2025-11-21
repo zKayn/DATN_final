@@ -1,0 +1,12 @@
+// backend/src/routes/category.routes.ts
+
+import { Router } from 'express';
+import { CategoryController } from '../controllers/category.controller';
+
+const router = Router();
+
+// Public routes
+router.get('/', CategoryController.getAll);
+router.get('/:id', CategoryController.getById);
+
+export default router;

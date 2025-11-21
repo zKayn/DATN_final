@@ -1,0 +1,60 @@
+{
+  "name": "sportshopapp",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@prisma/client": "^6.19.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-navigation/bottom-tabs": "^7.4.7",
+    "@react-navigation/native": "^7.1.17",
+    "@react-navigation/stack": "^7.4.8",
+    "axios": "^1.12.2",
+    "babel-preset-expo": "^54.0.3",
+    "expo": "~54.0.10",
+    "expo-font": "^14.0.8",
+    "expo-image-picker": "~17.0.8",
+    "expo-linear-gradient": "^15.0.7",
+    "expo-status-bar": "~3.0.8",
+    "expo-vector-icons": "^10.0.1",
+    "nativewind": "^2.0.0",
+    "prisma": "^6.19.0",
+    "react": "19.1.0",
+    "react-hook-form": "^7.63.0",
+    "react-native": "0.81.4",
+    "react-native-heroicons": "^4.0.0",
+    "react-native-reanimated": "~4.1.1",
+    "react-native-safe-area-context": "^5.6.1",
+    "react-native-screens": "^4.16.0",
+    "react-native-svg": "^15.13.0",
+    "react-native-svg-transformer": "^1.5.1",
+    "react-native-vector-icons": "^10.3.0",
+    "socket.io-client": "^4.8.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.0",
+    "@types/react-native-vector-icons": "^6.4.18",
+    "tailwindcss": "^3.3.2",
+    "typescript": "~5.9.2"
+  },
+  "private": true,
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zKayn/DATN.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zKayn/DATN/issues"
+  },
+  "homepage": "https://github.com/zKayn/DATN#readme"
+}
