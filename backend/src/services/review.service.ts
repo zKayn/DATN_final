@@ -1,9 +1,5 @@
 // backend/src/services/review.service.ts
-<<<<<<< HEAD
-// COMPLETE VERSION with Admin Methods
-=======
 // ✅ FIXED FOR MONGODB - images is now string[] (not JSON string)
->>>>>>> 986c545 (Update last)
 
 import { PrismaClient } from '@prisma/client';
 
@@ -41,7 +37,6 @@ export class ReviewService {
       },
     });
 
-    // ✅ Check if already reviewed - THROW ERROR (user must edit from My Reviews)
     if (existingReview) {
       throw new Error('You have already reviewed this product. Please edit your existing review from My Reviews.');
     }
@@ -99,12 +94,7 @@ export class ReviewService {
 
     return {
       ...review,
-<<<<<<< HEAD
-      images: JSON.parse(review.images as string),
-      isUpdate: false, // Flag to indicate this was a new review
-=======
       isUpdate: false,
->>>>>>> 986c545 (Update last)
     };
   }
 
@@ -445,29 +435,17 @@ export class ReviewService {
       prisma.review.count({ where }),
     ]);
 
-<<<<<<< HEAD
-    // Parse images and transform for frontend
-    const parsedReviews = reviews.map(review => ({
-      ...review,
-      images: JSON.parse(review.images as string),
-      status: review.isApproved ? 'APPROVED' : 'PENDING', // Add status field
-=======
     // ✅ FIX: No JSON.parse, just add status field
     const parsedReviews = reviews.map(review => ({
       ...review,
       status: review.isApproved ? 'APPROVED' : 'PENDING',
->>>>>>> 986c545 (Update last)
       product: {
         ...review.product,
         images: review.product.images.map(img => img.url),
       },
     }));
 
-<<<<<<< HEAD
-    return parsedReviews; // Return array directly for compatibility with frontend
-=======
     return parsedReviews;
->>>>>>> 986c545 (Update last)
   }
 
   /**
@@ -476,17 +454,9 @@ export class ReviewService {
   static async getReviewStats() {
     console.log('📊 ReviewService: Calculating stats...');
 
-<<<<<<< HEAD
-    // Total reviews
     const total = await prisma.review.count();
     console.log('- Total reviews:', total);
 
-    // Average rating
-=======
-    const total = await prisma.review.count();
-    console.log('- Total reviews:', total);
-
->>>>>>> 986c545 (Update last)
     const avgResult = await prisma.review.aggregate({
       _avg: {
         rating: true,
@@ -494,10 +464,6 @@ export class ReviewService {
     });
     console.log('- Avg rating:', avgResult._avg.rating);
 
-<<<<<<< HEAD
-    // Count by approval status
-=======
->>>>>>> 986c545 (Update last)
     const [approved, pending] = await Promise.all([
       prisma.review.count({ where: { isApproved: true } }),
       prisma.review.count({ where: { isApproved: false } }),
@@ -510,83 +476,7 @@ export class ReviewService {
       byStatus: {
         pending,
         approved,
-<<<<<<< HEAD
-        rejected: 0, // Your schema uses isApproved (boolean), not status enum
-      },
-    };
-
-    console.log('✅ Stats calculated:', stats);
-    return stats;
-  }
-
-  /**
-   * Admin: Update review status (approve/reject)
-   */
-  static async updateReviewStatus(reviewId: string, status: string) {
-    console.log(`📝 ReviewService: Updating review ${reviewId} to ${status}...`);
-
-    const review = await prisma.review.findUnique({
-      where: { id: reviewId },
-    });
-
-    if (!review) {
-      throw new Error('Review not found');
-    }
-
-    // Convert status string to isApproved boolean
-    let isApproved: boolean;
-    if (status === 'APPROVED') {
-      isApproved = true;
-    } else if (status === 'REJECTED' || status === 'PENDING') {
-      isApproved = false;
-    } else {
-      throw new Error('Invalid status. Must be APPROVED, REJECTED, or PENDING');
-    }
-
-    console.log(`- Setting isApproved to: ${isApproved}`);
-
-    const updatedReview = await prisma.review.update({
-      where: { id: reviewId },
-      data: { isApproved },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-            avatar: true,
-          },
-        },
-        product: {
-          select: {
-            id: true,
-            name: true,
-            images: {
-              select: { url: true },
-              take: 1,
-            },
-          },
-        },
-      },
-    });
-
-    // Update product rating
-    await this.updateProductRating(review.productId);
-
-    console.log('✅ Review status updated successfully');
-
-    // Parse images and add status field for compatibility
-    return {
-      ...updatedReview,
-      images: JSON.parse(updatedReview.images as string),
-      status: isApproved ? 'APPROVED' : 'PENDING',
-      product: {
-        ...updatedReview.product,
-        images: updatedReview.product.images.map(img => img.url),
-=======
         rejected: 0,
->>>>>>> 986c545 (Update last)
       },
     };
 
@@ -685,44 +575,14 @@ export class ReviewService {
   }
 
   /**
-   * Admin: Delete any review
-   */
-<<<<<<< HEAD
-  static async deleteReviewAdmin(reviewId: string) {
-    console.log(`🗑️ ReviewService: Deleting review ${reviewId}...`);
-
-    const review = await prisma.review.findUnique({
-      where: { id: reviewId },
-    });
-
-    if (!review) {
-      throw new Error('Review not found');
-    }
-
-    await prisma.review.delete({
-      where: { id: reviewId },
-    });
-
-    // Update product rating after deletion
-    await this.updateProductRating(review.productId);
-
-    console.log('✅ Review deleted successfully');
-    return { message: 'Review deleted successfully' };
-=======
-  static async approveReview(reviewId: string) {
-    return this.updateReviewStatus(reviewId, 'APPROVED');
->>>>>>> 986c545 (Update last)
-  }
-
-  /**
-   * Admin: Approve review (legacy method - use updateReviewStatus instead)
+   * Admin: Approve review
    */
   static async approveReview(reviewId: string) {
     return this.updateReviewStatus(reviewId, 'APPROVED');
   }
 
   /**
-   * Admin: Reject review (legacy method - use updateReviewStatus instead)
+   * Admin: Reject review
    */
   static async rejectReview(reviewId: string) {
     return this.updateReviewStatus(reviewId, 'REJECTED');

@@ -2,23 +2,20 @@
 
 import apiService from './api';
 
+// ✅ FIXED: Interface khớp với backend response
 export interface OverviewStats {
   revenue: {
     total: number;
-    thisMonth: number;
-    lastMonth: number;
-    growth: number;
+    change: number;
   };
   orders: {
     total: number;
-    thisMonth: number;
-    lastMonth: number;
-    growth: number;
     pending: number;
     processing: number;
   };
   customers: {
     total: number;
+    change: number;
   };
   products: {
     total: number;
@@ -61,12 +58,13 @@ export interface CategoryStat {
   revenue: number;
 }
 
-// ✅ FIX: Change totalAmount to total
 export interface RecentOrder {
   id: string;
-  total: number; // ✅ FIX: Renamed from totalAmount
+  orderNumber: string;
+  total: number;
   status: string;
   createdAt: string;
+  paymentStatus: string;
   user: {
     id: string;
     email: string;
@@ -93,7 +91,7 @@ export interface SalesComparison {
     revenue: number;
     orders: number;
   };
-  growth: {
+  change: {
     revenue: number;
     orders: number;
   };
@@ -105,7 +103,8 @@ const dashboardApi = {
    */
   getOverview: async (): Promise<OverviewStats> => {
     const response = await apiService.get('/admin/dashboard/overview');
-    return response.data;
+    console.log('📊 Overview response:', response.data);
+    return response.data.data;
   },
 
   /**
@@ -117,7 +116,7 @@ const dashboardApi = {
     const response = await apiService.get('/admin/dashboard/revenue', {
       params: { period },
     });
-    return response.data;
+    return response.data.data;
   },
 
   /**
@@ -127,7 +126,7 @@ const dashboardApi = {
     const response = await apiService.get('/admin/dashboard/top-products', {
       params: { limit },
     });
-    return response.data;
+    return response.data.data;
   },
 
   /**
@@ -137,7 +136,7 @@ const dashboardApi = {
     const response = await apiService.get('/admin/dashboard/top-customers', {
       params: { limit },
     });
-    return response.data;
+    return response.data.data;
   },
 
   /**
@@ -145,7 +144,7 @@ const dashboardApi = {
    */
   getCategoryStats: async (): Promise<CategoryStat[]> => {
     const response = await apiService.get('/admin/dashboard/categories');
-    return response.data;
+    return response.data.data;
   },
 
   /**
@@ -155,7 +154,7 @@ const dashboardApi = {
     const response = await apiService.get('/admin/dashboard/recent-orders', {
       params: { limit },
     });
-    return response.data;
+    return response.data.data;
   },
 
   /**
@@ -163,7 +162,7 @@ const dashboardApi = {
    */
   getSalesComparison: async (): Promise<SalesComparison> => {
     const response = await apiService.get('/admin/dashboard/sales-comparison');
-    return response.data;
+    return response.data.data;
   },
 };
 

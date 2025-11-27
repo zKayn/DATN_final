@@ -1,7 +1,7 @@
 // admin-web/src/config/api.ts
 
 export const API_CONFIG = {
-  BASE_URL: 'http://192.168.1.187:5000/api', // 🔥 SAME AS MOBILE
+  BASE_URL: 'http://192.168.1.68:5000/api', // 🔥 SAME AS MOBILE
   TIMEOUT: 60000,
   HEADERS: {
     'Content-Type': 'application/json',

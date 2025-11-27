@@ -1,6 +1,6 @@
 export const API_CONFIG = {
   // Thay đổi IP này thành IP máy tính của bạn
-  BASE_URL: 'http://192.168.1.187:5000/api',
+  BASE_URL: 'http://192.168.1.68:5000/api',
   
   // Timeout
   TIMEOUT: 30000,

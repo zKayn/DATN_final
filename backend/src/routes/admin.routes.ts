@@ -12,6 +12,7 @@ import { AuthMiddleware } from '../middleware/auth.middleware';
 import { CouponController } from '../controllers/coupon.controller';
 import { ProductController } from '../controllers/product.controller';
 import { WishlistController } from '../controllers/wishlist.controller';
+import dashboardRouter from './dashboard.routes';
 
 const router = Router();
 
@@ -22,6 +23,8 @@ router.post('/auth/login', AuthController.adminLogin);
 // ==================== PROTECTED ADMIN ROUTES ====================
 // ✅ All routes below require admin authentication
 router.use(AuthMiddleware.authenticateAdmin);
+
+router.use('/dashboard', dashboardRouter);
 
 // ==================== PRODUCTS MANAGEMENT ====================
 router.get('/products', ProductController.getAll);
